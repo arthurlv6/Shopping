@@ -19,7 +19,7 @@ namespace Inventory
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionString")), ServiceLifetime.Scoped);
             services.AddScoped<StockRepo>();
-
+            services.AddScoped<StockService>();
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
     }

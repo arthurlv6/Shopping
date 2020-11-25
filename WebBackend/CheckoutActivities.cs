@@ -16,9 +16,7 @@ namespace WebBackend
             _inventoryService = inventoryService;
         }
         [FunctionName("A_Payment")]
-        public static async Task<string> Payment(
-            [ActivityTrigger] CartDto cart,
-            ILogger log)
+        public static async Task<string> Payment([ActivityTrigger] CartDto cart,ILogger log)
         {
             log.LogInformation($"payment processed cart {cart.Name}");
             // simulate doing the activity
