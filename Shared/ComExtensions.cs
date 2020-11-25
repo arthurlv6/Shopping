@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TSP.Shared;
 
 namespace Shared
@@ -17,7 +15,7 @@ namespace Shared
         {
             return func(@this);
         }
-        public static Maybe<T> GetMaybeObject<S,T>(this S @this, Func<S, T> func)
+        public static Maybe<T> TryGetMaybeObject<S,T>(this S @this, Func<S, T> func)
         {
             try
             {

@@ -14,12 +14,15 @@ namespace Inventory
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
             var services = builder.Services;
             services.AddAutoMapper(typeof(ModelProfile).GetTypeInfo().Assembly);
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionString")), ServiceLifetime.Scoped);
-            services.AddScoped<StockRepo>();
-            services.AddScoped<StockService>();
+                options.UseSqlServer(Environment.GetEnvironmentVariable("DefaultConnection")), ServiceLifetime.Scoped);
+            services.AddScoped<IStockRepo, StockRepo>();
+            services.AddScoped<IStockService, StockService>();
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
     }

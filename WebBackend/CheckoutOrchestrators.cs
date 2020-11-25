@@ -15,44 +15,43 @@ namespace WebBackend
             ILogger log)
         {
             var cart = ctx.GetInput<CartDto>();
-
-            if (!ctx.IsReplaying)
-                log.LogInformation("About to call transcode video activity");
-
             string paid = null;
             string shipped = null;
             string inventoryDone = null;
 
             try
             {
-                paid = await
-                    ctx.CallActivityAsync<string>("A_Payment", cart);
+                if (!ctx.IsReplaying)
+                    log.LogInformation("About to call an purchased activity");
+
+                paid = await ctx.CallActivityAsync<string>("A_Payment", cart);
 
                 if (!ctx.IsReplaying)
                     log.LogInformation("About to call shipping");
 
-                shipped = await
-                    ctx.CallActivityAsync<string>("A_Shipping", cart);
+                shipped = await ctx.CallActivityAsync<string>("A_Shipping", cart);
 
                 if (!ctx.IsReplaying)
                     log.LogInformation("About to call inventory");
 
-                inventoryDone = await
-                    ctx.CallActivityAsync<string>("A_Inventory", cart);
+                inventoryDone = await ctx.CallActivityAsync<string>("A_Inventory", cart);
             }
             catch (Exception e)
             {
                 if (!ctx.IsReplaying)
-                    log.LogInformation($"Caught an error from an activity: {e.Message}");
+                    log.LogError($"Caught an error from an activity: {e.Message}");
 
                 await
                     ctx.CallActivityAsync<string>("A_Cleanup", 
-                        new[] { paid, shipped, inventoryDone });
+                        new[] { paid??"", shipped??"", inventoryDone??"" });
 
                 return new
                 {
-                    Error = "Failed to process uploaded video",
-                    Message = e.Message
+                    Error = "Failed to process the purchase",
+                    Message = e.Message,
+                    Paid = paid??"",
+                    Shipped = shipped??"",
+                    InventoryDone = inventoryDone??""
                 };
             }
 

@@ -9,8 +9,8 @@ namespace Inventory
 {
     public class FunAPI
     {
-        private readonly StockService _service;
-        public FunAPI(StockService service)
+        private readonly IStockService _service;
+        public FunAPI(IStockService service)
         {
             _service = service;
         }
@@ -22,6 +22,7 @@ namespace Inventory
             var result = _service.NewOrder(req);
             if (result.IsSuccess)
                 return new OkObjectResult("done");
+            log.LogError(result.Error);
             return new BadRequestResult();
         }
     }

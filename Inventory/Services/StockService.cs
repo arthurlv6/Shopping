@@ -11,17 +11,17 @@ using TSP.Shared;
 
 namespace Inventory
 {
-    public class StockService
+    public class StockService : IStockService
     {
-        private readonly StockRepo _stockRepo;
+        private readonly IStockRepo _stockRepo;
 
-        public StockService(StockRepo stockRepo)
+        public StockService(IStockRepo stockRepo)
         {
             _stockRepo = stockRepo;
         }
         public Maybe<StockDto> NewOrder(HttpRequest req)
         {
-            return req.GetMaybeObject(r =>
+            return req.TryGetMaybeObject(r =>
             {
                 return new StreamReader(r.Body).ReadToEndAsync().Result
                     .Map(s => JsonConvert.DeserializeObject<CartDto>(s))

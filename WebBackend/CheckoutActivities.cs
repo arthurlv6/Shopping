@@ -20,7 +20,7 @@ namespace WebBackend
         {
             log.LogInformation($"payment processed cart {cart.Name}");
             // simulate doing the activity
-            await Task.Delay(5000);
+            await Task.Delay(1000);
             return $"payemnt Approved";
         }
 
@@ -34,7 +34,7 @@ namespace WebBackend
                 throw new InvalidOperationException("Failed");
             }
             // simulate doing the activity
-            await Task.Delay(5000);
+            await Task.Delay(1000);
             return "Shipping approved";
         }
 

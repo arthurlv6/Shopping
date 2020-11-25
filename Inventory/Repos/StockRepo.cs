@@ -10,7 +10,7 @@ using Shared;
 
 namespace Inventory
 {
-    public class StockRepo: BaseRepo
+    public class StockRepo : BaseRepo, IStockRepo
     {
         public StockRepo(AppDbContext _dBContext, IMapper _mapper) : base(_dBContext, _mapper)
         {
