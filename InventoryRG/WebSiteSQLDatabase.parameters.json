@@ -10,6 +10,9 @@
     },
     "databaseName": {
       "value": "dev-db-inventory"
+    },
+    "administratorLoginPassword": {
+      "value": "Tomhack!1"
     }
   }
 }

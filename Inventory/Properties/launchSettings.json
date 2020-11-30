@@ -1,8 +1,13 @@
 {
   "profiles": {
     "Inventory": {
-      "commandName": "Project",
-      "commandLineArgs": "host start --port 7073 --pause-on-error"
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 34606,
+      "useSSL": false
     }
   }
 }
