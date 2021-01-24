@@ -42,5 +42,30 @@ namespace Inventory
                 return Maybe.Fail<StockDto>(isExist.Error);
             });
         }
+
+        public async Task<Maybe<StockDto>> NewOrderTemp(HttpRequest req)
+        {
+            return await req.TryGetMaybeObject(r =>
+            {
+                return new StreamReader(r.Body).ReadToEndAsync().Result
+                    .Map(s => JsonConvert.DeserializeObject<CartDto>(s))
+                    .Map(d => d.Lines.FirstOrDefault())
+                    .Map(l => new StockDto() { Name = l.Name, Quantity = l.Quantity });
+            })
+            .RailwayAsync(async dto =>
+            {
+                var isExist = await _stockRepo.IsExistAsync(dto.Value.Name);
+
+                if (isExist.IsSuccess && isExist.Value)
+                {
+                    return Maybe.Ok((await _stockRepo.UpdateAsync(dto.Value)).Value);
+                }
+                if (isExist.IsSuccess && !isExist.Value)
+                {
+                    return Maybe.Ok((await _stockRepo.AddAsync(dto.Value)).Value);
+                }
+                return Maybe.Fail<StockDto>(isExist.Error);
+            });
+        }
     }
 }

@@ -23,6 +23,8 @@ Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "InventoryRG", "InventoryRG\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryApi", "InventoryApi\InventoryApi.csproj", "{81E47D08-85F2-4A33-B00B-D256C04513E3}"
 EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "ServiceBusRG", "ServiceBusRG\ServiceBusRG.deployproj", "{D2BA06B4-6390-4F55-AED0-CCF399ECA5B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{81E47D08-85F2-4A33-B00B-D256C04513E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81E47D08-85F2-4A33-B00B-D256C04513E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81E47D08-85F2-4A33-B00B-D256C04513E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2BA06B4-6390-4F55-AED0-CCF399ECA5B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2BA06B4-6390-4F55-AED0-CCF399ECA5B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2BA06B4-6390-4F55-AED0-CCF399ECA5B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2BA06B4-6390-4F55-AED0-CCF399ECA5B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{38003676-7BFF-4680-B8BC-2AF85F6D6012} = {0D1D5BF5-6BBB-4D59-A994-5F66C6AEB77F}
 		{6811ED47-E534-4DF4-A58B-1C41293443F6} = {2D2A06D8-8757-4943-B7C6-B3FB0DD53FBD}
+		{D2BA06B4-6390-4F55-AED0-CCF399ECA5B6} = {2D2A06D8-8757-4943-B7C6-B3FB0DD53FBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2BE04AC7-4C2C-48EE-A4AA-7ED277206FED}

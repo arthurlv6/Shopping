@@ -15,11 +15,11 @@ namespace Inventory
             _service = service;
         }
         [FunctionName("InventoryPost")]
-        public IActionResult Run(
+        public async  Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous,  "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            var result = _service.NewOrder(req);
+            var result = await _service.NewOrderTemp(req);
             if (result.IsSuccess)
                 return new OkObjectResult("done");
             log.LogError(result.Error);

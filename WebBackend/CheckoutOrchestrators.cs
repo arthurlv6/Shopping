@@ -3,6 +3,7 @@ using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using Microsoft.Extensions.Logging;
 using Shared;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebBackend
@@ -18,9 +19,10 @@ namespace WebBackend
             string paid = null;
             string shipped = null;
             string inventoryDone = null;
-
+            string approvalResult = "Unknown";
             try
             {
+                /*
                 if (!ctx.IsReplaying)
                     log.LogInformation("About to call an purchased activity");
 
@@ -35,6 +37,42 @@ namespace WebBackend
                     log.LogInformation("About to call inventory");
 
                 inventoryDone = await ctx.CallActivityAsync<string>("A_Inventory", cart);
+                */
+
+                await ctx.CallActivityAsync("A_SendApprovalRequestEmail", new ApprovalInfo()
+                {
+                    OrchestrationId = ctx.InstanceId,
+                    Message = "activate your account."
+                });
+
+
+                using (var cts = new CancellationTokenSource())
+                {
+                    var timeoutAt = ctx.CurrentUtcDateTime.AddMinutes(1);
+                    var timeoutTask = ctx.CreateTimer(timeoutAt, cts.Token);
+                    var approvalTask = ctx.WaitForExternalEvent<string>("ApprovalResult");
+
+                    var winner = await Task.WhenAny(approvalTask, timeoutTask);
+                    if (winner == approvalTask)
+                    {
+                        approvalResult = approvalTask.Result;
+                        cts.Cancel(); // we should cancel the timeout task
+                    }
+                    else
+                    {
+                        approvalResult = "Timed Out";
+                    }
+                }
+
+                if (approvalResult == "Approved")
+                {
+                    await ctx.CallActivityAsync("A_Approve", "approve");
+                }
+                else
+                {
+                    await ctx.CallActivityAsync("A_Reject", "rejected");
+                }
+
             }
             catch (Exception e)
             {
