@@ -4,10 +4,9 @@
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
     "InventoryApi": "http://localhost:7073/api/InventoryPost",
-    "SendGridKey": null,
+    "SendGridKey": "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",
     "ApproverEmail": "qingjiang.lyu@countdown.co.nz",
     "SenderEmail": "arthur.lv6@gmail.com",
     "Host": "http://localhost:7071"
-
   }
 }

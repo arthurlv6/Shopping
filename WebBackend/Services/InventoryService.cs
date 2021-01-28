@@ -16,7 +16,7 @@ namespace WebBackend
         }
         public async Task PostAsync(CartDto cartDto)
         {
-            Uri url = new Uri("https://inventoryapi20201126134558.azurewebsites.net/api/stock");
+            Uri url = new Uri("http://localhost:7073/api/InventoryPost");
             var jsonData = System.Text.Json.JsonSerializer.Serialize(cartDto);
             var modelJson =
                 new StringContent(jsonData, Encoding.UTF8, "application/json");

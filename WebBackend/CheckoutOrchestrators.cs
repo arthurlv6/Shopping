@@ -22,6 +22,7 @@ namespace WebBackend
             string approvalResult = "Unknown";
             try
             {
+
                 /*
                 if (!ctx.IsReplaying)
                     log.LogInformation("About to call an purchased activity");
@@ -38,17 +39,18 @@ namespace WebBackend
 
                 inventoryDone = await ctx.CallActivityAsync<string>("A_Inventory", cart);
                 */
+                
+                
 
                 await ctx.CallActivityAsync("A_SendApprovalRequestEmail", new ApprovalInfo()
                 {
                     OrchestrationId = ctx.InstanceId,
                     Message = "activate your account."
                 });
-
-
+                
                 using (var cts = new CancellationTokenSource())
                 {
-                    var timeoutAt = ctx.CurrentUtcDateTime.AddMinutes(1);
+                    var timeoutAt = ctx.CurrentUtcDateTime.AddMinutes(5);
                     var timeoutTask = ctx.CreateTimer(timeoutAt, cts.Token);
                     var approvalTask = ctx.WaitForExternalEvent<string>("ApprovalResult");
 
@@ -72,7 +74,6 @@ namespace WebBackend
                 {
                     await ctx.CallActivityAsync("A_Reject", "rejected");
                 }
-
             }
             catch (Exception e)
             {

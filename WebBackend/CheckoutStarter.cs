@@ -32,7 +32,7 @@ namespace VideoProcessor
         }
 
         [FunctionName("SubmitApproval")]
-        public static async Task<HttpResponseMessage> SubmitVideoApproval(
+        public static async Task<HttpResponseMessage> SubmitApproval(
            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "SubmitApproval/{id}")]
             HttpRequest req,
            [DurableClient] IDurableOrchestrationClient client,
@@ -45,9 +45,16 @@ namespace VideoProcessor
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
 
             log.LogInformation($"Sending approval result to {approval.OrchestrationId} of {result}");
-
-            // send the ApprovalResult external event to this orchestration
-            await client.RaiseEventAsync(approval.OrchestrationId, "ApprovalResult", result);
+            try
+            {
+                // send the ApprovalResult external event to this orchestration
+                await client.RaiseEventAsync(approval.OrchestrationId, "ApprovalResult", result);
+            }
+            catch (System.Exception)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+           
 
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
