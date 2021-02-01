@@ -68,5 +68,6 @@ namespace Shared
         public string Paid { get; set; }
         public string Shipped { get; set; }
         public string InventoryDone { get; set; }
+        public string Token { get; set; }
     }
 }

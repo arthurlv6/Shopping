@@ -20,6 +20,7 @@ namespace WebBackend
             string shipped = null;
             string inventoryDone = null;
             string approvalResult = "Unknown";
+            string token = null;
             try
             {
 
@@ -68,7 +69,7 @@ namespace WebBackend
 
                 if (approvalResult == "Approved")
                 {
-                    await ctx.CallActivityAsync("A_Approve", "approve");
+                    token = await ctx.CallActivityAsync<string>("A_GetGigyaToken", cart.Name);//Name is the email.
                 }
                 else
                 {
@@ -98,7 +99,8 @@ namespace WebBackend
             {
                 Paid = paid,
                 Shipped = shipped,
-                InventoryDone = inventoryDone
+                InventoryDone = inventoryDone,
+                Token = token
             };
         }
     }

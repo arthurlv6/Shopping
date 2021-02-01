@@ -91,13 +91,16 @@ namespace WebBackend
             message.SetFrom(new EmailAddress(Environment.GetEnvironmentVariable("SenderEmail")));
             message.SetSubject(subject);
         }
-        [FunctionName("A_Approve")]
-        public static async Task Approve(
+        [FunctionName("A_GetGigyaToken")]
+        public static async Task<string> Approve(
             [ActivityTrigger] string input,
             ILogger log)
         {
-            log.LogInformation($"Publishing {input}");
+
+            log.LogInformation($"input: {input}");
             await Task.Delay(1000);
+            // call Gigya to get the token using email.
+            return "token";
         }
 
         [FunctionName("A_Reject")]

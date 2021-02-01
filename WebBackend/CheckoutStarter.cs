@@ -54,8 +54,6 @@ namespace VideoProcessor
             {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
-           
-
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
